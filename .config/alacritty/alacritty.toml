@@ -1,0 +1,14 @@
+[font]
+normal = { family = "Fira Code", style = "regular" }
+bold   = { family = "fira code", style = "bold" }
+italic = { family = "fira code", style = "regular italic" }
+bold_italic = { family = "fira code", style = "bold italic" }
+size = 10.25
+[window]
+padding = {x = 8, y = 3}
+opacity = 0.8
+blur = false
+[general]
+import = [
+    "./theme/themes/gruvbox_dark.toml"
+]
