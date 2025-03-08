@@ -2,7 +2,7 @@
 @define-color fg rgba(235, 219, 178, 1);
 @define-color disabled-fg rgba(146, 131, 116, 1);
 @define-color bg rgba(40, 40, 40, 1);
-@define-color bg-semitransparent rgba(40, 40, 40, 0.7);
+@define-color bg-semitransparent rgba(40, 40, 40, 0.6);
 @define-color bg-alternative rgba(60, 56, 54, 1);
 @define-color bg-alternative-semitransparent rgba(60, 56, 54, 0.5);
 @define-color fg-alternative rgba(235, 219, 178, 1);
@@ -61,7 +61,7 @@ button:hover {
     all: initial; /*Remove GTK theme values (waybar #1351)*/
     padding: 9px 6px;
     min-width: 0; /*Fix weird spacing in materia (waybar #450)*/
-    background-color: transparent;
+    background-color: @bg;
     color: @fg;
     border-radius: 20px;
     box-shadow: inset 0 -3px transparent; /* Use box-shadow instead of border so the text isn't offset*/
@@ -74,8 +74,8 @@ button:hover {
 
 #workspaces button.active {
     background: @bg-alternative;
-    border-radius: 1px;
-    box-shadow: inset 0 -2px @fg; 
+    border-radius: 20px;
+    box-shadow: inset 0px 0px 0px 2px @fg; 
 }
 
 #workspaces button.urgent {
