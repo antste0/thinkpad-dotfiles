@@ -69,18 +69,15 @@ button:hover {
 
 #workspaces button:hover {
     background: @bg-alternative;
-    border-radius: 5px;
 }
 
 #workspaces button.active {
     background: @bg-alternative;
-    border-radius: 20px;
     box-shadow: inset 0px 0px 0px 2px @fg; 
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
-    border-radius: 4px;
+    background-color: @red;
 }
 
 #mode {
