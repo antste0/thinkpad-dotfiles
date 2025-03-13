@@ -1,11 +1,11 @@
 /* variables */
 @define-color fg rgba(235, 219, 178, 1);
+@define-color fg-alternative rgba(235, 219, 178, 1);
 @define-color disabled-fg rgba(146, 131, 116, 1);
 @define-color bg rgba(40, 40, 40, 1);
 @define-color bg-semitransparent rgba(40, 40, 40, 0.6);
 @define-color bg-alternative rgba(60, 56, 54, 1);
 @define-color bg-alternative-semitransparent rgba(60, 56, 54, 0.5);
-@define-color fg-alternative rgba(235, 219, 178, 1);
 @define-color red rgba(251, 73, 52, 1);
 @define-color green rgba(152, 151, 26, 1);
 
@@ -17,22 +17,12 @@
 
 window#waybar {
     background-color: @bg-semitransparent;
-/*    background-color: rgba(43, 48, 59, 0.5); */
     transition-property: background-color;
 }
 
 window#waybar.hidden {
     opacity: 0.2;
 }
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
 
 window#waybar.termite {
     background-color: #3F3F3F;
@@ -59,11 +49,11 @@ button:hover {
 
 #workspaces button {
     all: initial; /*Remove GTK theme values (waybar #1351)*/
-    padding: 9px 6px;
+    padding: 0px 10px;
     min-width: 0; /*Fix weird spacing in materia (waybar #450)*/
     background-color: @bg;
     color: @fg;
-    border-radius: 20px;
+    border-radius: 15px;
     box-shadow: inset 0 -3px transparent; /* Use box-shadow instead of border so the text isn't offset*/
 }
 
@@ -73,7 +63,7 @@ button:hover {
 
 #workspaces button.active {
     background: @bg-alternative;
-    box-shadow: inset 0px 0px 0px 2px @fg; 
+    box-shadow: inset 0px 0px 0px 2px @fg;
 }
 
 #workspaces button.urgent {
@@ -101,6 +91,7 @@ button:hover {
 #idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
+#network,
 #tray {
     padding: 2px 4px;
     background: @bg-alternative;
@@ -204,23 +195,18 @@ label:focus {
 
 #network {
     padding-right: 10px;
-    background: @bg-alternative;
-    color: @fg
 }
 
 #network.disconnected {
     padding-left: 10px;
-    background-color: #f53c3c;
+    background-color: @red;
 }
 
 #pulseaudio {
-    /*background-color: @background;
-    color: @color4;*/
     color: @fg
 }
 
 #pulseaudio.muted {
-    /*background-color: #90b1b1;*/
     background: @bg;
     color: @disabled-fg;
 }
@@ -240,10 +226,6 @@ label:focus {
 
 #temperature.critical {
     background-color: #eb4d4b;
-}
-
-#tray {
-    /*background-color: @background;*/
 }
 
 #tray > .passive {
