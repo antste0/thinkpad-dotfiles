@@ -1,4 +1,5 @@
 # thinkpad dotfiles
+## Screenshots
 ![](./screenshots/1741285358.png)
 ![](./screenshots/1741277115.png)
 ![](./screenshots/1741277076.png)
