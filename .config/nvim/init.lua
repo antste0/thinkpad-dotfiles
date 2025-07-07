@@ -38,6 +38,9 @@ vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { noremap = true, sil
 
 -- YouCompleteMe settings
 vim.g.ycm_global_ycm_extra_conf = "~/.local/share/nvim/site/pack/packer/start/YouCompleteMe.git/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+vim.g.ycm_server_python_interpreter = '/usr/bin/python3'
+vim.g.ycm_rust_server = 'rust-analyzer'
+vim.g.ycm_rust_toolchain_root = vim.fn.expand('~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu')
 vim.g.ycm_server_keep_logfiles = 1
 vim.g.ycm_server_log_level = 'debug'
 
@@ -96,10 +99,19 @@ require('lualine').setup {
   extensions = {}
 }
 
+vim.g.ycm_language_server = {
+  {
+    name = 'rust',
+    cmdline = { 'rust-analyzer' },
+    filetypes = { 'rust' },
+    project_root_files = { 'Cargo.toml' }
+  }
+}
+
 require('packer').startup(function(use)
     use 'https://github.com/elkowar/yuck.vim.git'
     use 'https://github.com/ycm-core/YouCompleteMe.git'
-    use 'rust-lang/rust.vim'
+    --use 'rust-lang/rust.vim'
     use 'https://github.com/tpope/vim-fugitive'
     use 'nvim-lualine/lualine.nvim'
     use 'https://github.com/lervag/vimtex'
