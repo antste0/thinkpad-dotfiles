@@ -5,10 +5,6 @@ vim.opt.runtimepath:append("~/.vim/after")
 -- Set Python 3 host program
 vim.g.python3_host_prog = '/usr/bin/python3'
 
--- Set background and colorscheme
-vim.opt.background = 'dark' -- or 'light' for light mode
-vim.cmd('colorscheme gruvbox')
-
 -- Filetype and syntax settings
 vim.cmd('filetype plugin on')
 vim.cmd('syntax on')
@@ -44,12 +40,43 @@ vim.g.ycm_rust_toolchain_root = vim.fn.expand('~/.rustup/toolchains/stable-x86_6
 vim.g.ycm_server_keep_logfiles = 1
 vim.g.ycm_server_log_level = 'debug'
 
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Setup lazy.nvim
+require("lazy").setup({
+  { 'elkowar/yuck.vim' },
+  { 'ycm-core/YouCompleteMe', build = './install.py' },
+  { 'tpope/vim-fugitive' },
+  { 'nvim-lualine/lualine.nvim' },
+  { 'lervag/vimtex' },
+  { 'morhetz/gruvbox' }
+})
+
+-- Set background and colorscheme
+vim.opt.background = 'dark' -- or 'light' for light mode
+vim.cmd('colorscheme gruvbox')
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'gruvbox-material',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
     disabled_filetypes = {
       statusline = {},
       winbar = {},
@@ -62,19 +89,6 @@ require('lualine').setup {
       statusline = 1000,
       tabline = 1000,
       winbar = 1000,
-      refresh_time = 16, -- ~60fps
-      events = {
-        'WinEnter',
-        'BufEnter',
-        'BufWritePost',
-        'SessionLoadPost',
-        'FileChangedShellPost',
-        'VimResized',
-        'Filetype',
-        'CursorMoved',
-        'CursorMovedI',
-        'ModeChanged',
-      },
     }
   },
   sections = {
@@ -107,14 +121,3 @@ vim.g.ycm_language_server = {
     project_root_files = { 'Cargo.toml' }
   }
 }
-
-require('packer').startup(function(use)
-    use 'https://github.com/elkowar/yuck.vim.git'
-    use 'https://github.com/ycm-core/YouCompleteMe.git'
-    --use 'rust-lang/rust.vim'
-    use 'https://github.com/tpope/vim-fugitive'
-    use 'nvim-lualine/lualine.nvim'
-    use 'https://github.com/lervag/vimtex'
-    use 'https://github.com/morhetz/gruvbox'
-end)
-
