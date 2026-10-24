@@ -4,18 +4,12 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-alias ls='ls --color=auto'
-alias v='vim'
-alias sv='sudo vim'
-alias nv='nvim'
-alias ..='cd ..'
-alias hyprland='Hyprland'
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="eastwood" # set by `omz`
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="jnrowe"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -80,7 +74,9 @@ ZSH_THEME="eastwood" # set by `omz`
 plugins=(
   git
   zsh-autosuggestions
-)
+  zsh-syntax-highlighting
+  fast-syntax-highlighting
+ )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,3 +108,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias nv='nvim'
+
+# Ctrl + arrow keys
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
+# LaTeX
+export PATH=/usr/local/texlive/2025/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin

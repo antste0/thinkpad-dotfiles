@@ -1,0 +1,30 @@
+{
+  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/21.1.0/clangd_21.1.0/bin/clangd",
+  "clangd.arguments": [
+    "--header-insertion=never",
+    "--fallback-style={BasedOnStyle: LLVM, IndentCaseLabels: false, IndentCaseBlocks: true, IndentWidth: 2}"
+  ],
+  "python.autoComplete.addBrackets": true,
+  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer.cargo.runBuildScripts": true,
+  "languageserver": {
+    "arduino": {
+      "command": "arduino-language-server",
+      "args": ["--background-index"],
+      "rootPatterns": ["*.ino"],
+      "filetypes": ["ino", "pde"]
+    }
+  },
+  "editor.formatOnSave": true,
+  "typescript.tsserver.formatOnSave": true,
+  "python.formatting.autopep8Args": ["--indent-size=4"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "cpp"
+  ],
+  "validator.cpp": "clang",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true
+}
+

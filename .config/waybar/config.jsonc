@@ -2,7 +2,7 @@
 {
     "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 25, // Waybar height (to be removed for auto height)
+    "height": 29, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 8, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -25,18 +25,13 @@
          "hyprland/workspaces": {
     //     "disable-scroll": true,
     //     "all-outputs": true,
-         "warp-on-scroll": false
-    //     "format": "{name}: {icon}",
-//       "format-icons": {
-//           "1": "",
-//           "2": "",
-//           "3": "",
-//           "4": "",
-//           "5": "",
-//           "urgent": "",
-//           "focused": "",
-//           "default": ""
-//       }
+         "warp-on-scroll": false,
+         "format": "<span font='15'>{icon}</span>",
+         "format-icons": {
+           "active": "●",
+           "default": "",
+           "empty": "○",
+          }
 
      },
     "keyboard-state": {
@@ -97,9 +92,10 @@
     },
     "clock": {
         // "timezone": "America/New_York",
-        "format": "{:%H:%M} ",
+        "interval": 1,
+        "format": "{:%H:%M:%S} ",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d} "
+        "format-alt": "{:%Y-%m-%d} "
     },
     "cpu": {
         "format": "{usage}% ",
@@ -117,7 +113,6 @@
         "format-icons": ["", "", ""]
     },
     "backlight": {
-        // "device": "acpi_video1",
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },

@@ -9,6 +9,9 @@ vim.g.python3_host_prog = '/usr/bin/python3'
 vim.cmd('filetype plugin on')
 vim.cmd('syntax on')
 
+-- Treat .ino files as cpp files
+vim.cmd('au BufRead,BufNewFile *.ino set filetype=cpp')
+
 -- General settings
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
@@ -32,13 +35,6 @@ vim.api.nvim_set_keymap('n', '<leader>tm', ':tabmove<CR>', { noremap = true, sil
 vim.api.nvim_set_keymap('n', '<leader>tc', ':tabclose<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>to', ':tabonly<CR>', { noremap = true, silent = true })
 
--- YouCompleteMe settings
-vim.g.ycm_global_ycm_extra_conf = "~/.local/share/nvim/site/pack/packer/start/YouCompleteMe.git/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-vim.g.ycm_server_python_interpreter = '/usr/bin/python3'
-vim.g.ycm_rust_server = 'rust-analyzer'
-vim.g.ycm_rust_toolchain_root = vim.fn.expand('~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu')
-vim.g.ycm_server_keep_logfiles = 1
-vim.g.ycm_server_log_level = 'debug'
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -60,21 +56,65 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
   { 'elkowar/yuck.vim' },
-  { 'ycm-core/YouCompleteMe', build = './install.py' },
+  { 'neoclide/coc.nvim' },
   { 'tpope/vim-fugitive' },
   { 'nvim-lualine/lualine.nvim' },
   { 'lervag/vimtex' },
-  { 'morhetz/gruvbox' }
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    ft = { 'markdown' },  -- ładuj dopiero przy otwarciu pliku .md
+    opts = {},
+  },
+  { 'rose-pine/neovim' },
+  { 'sphamba/smear-cursor.nvim' },
+  {
+    "kiyoon/jupynium.nvim",
+    -- build = "pip3 install --user .",
+    build = "uv pip install . --python=$HOME/.virtualenvs/jupynium/bin/python",
+    -- build = "conda run --no-capture-output -n jupynium pip install .",
+  },
+  "rcarriga/nvim-notify",   -- optional
+  "stevearc/dressing.nvim", -- optional, UI for :JupyniumKernelSelect
 })
+
 
 -- Set background and colorscheme
 vim.opt.background = 'dark' -- or 'light' for light mode
-vim.cmd('colorscheme gruvbox')
+vim.cmd('colorscheme rose-pine')
+
+-- Insert mode mappings for coc.nvim
+-- Navigate the completion menu
+-- coc.nvim Tab completion configuration
+-- Tab to confirm completion, Enter for new lines
+
+-- Use Tab for trigger completion and navigate to next complete item
+vim.api.nvim_set_keymap('i', '<Tab>', 
+  'coc#pum#visible() ? coc#pum#confirm() : "\\<Tab>"',
+  { expr = true, silent = true, noremap = true }
+)
+
+-- Use Shift-Tab to navigate to previous complete item
+vim.api.nvim_set_keymap('i', '<S-Tab>',
+  'coc#pum#visible() ? coc#pum#prev() : "\\<C-h>"',
+  { expr = true, silent = true, noremap = true }
+)
+
+-- Make Enter behave normally (insert new line)
+-- This ensures Enter doesn't confirm completion
+vim.api.nvim_set_keymap('i', '<CR>', 
+  '<CR>',
+  { silent = true, noremap = true }
+)
+
 
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'gruvbox-material',
+    theme = 'rose-pine',
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
@@ -113,11 +153,39 @@ require('lualine').setup {
   extensions = {}
 }
 
-vim.g.ycm_language_server = {
-  {
-    name = 'rust',
-    cmdline = { 'rust-analyzer' },
-    filetypes = { 'rust' },
-    project_root_files = { 'Cargo.toml' }
-  }
+require("smear_cursor").toggle()
+return {
+  "sphamba/smear-cursor.nvim",
+
+    "benomahony/uv.nvim",
+  -- Optional filetype to lazy load when you open a python file
+  -- ft = { python }
+  -- Optional dependency, but recommended:
+     dependencies = {
+       "folke/snacks.nvim"
+  -- or
+  --   "nvim-telescope/telescope.nvim"
+     },
+
+  opts = {
+    picker_integration = true,
+
+    -- Smear cursor when switching buffers or windows.
+    smear_between_buffers = true,
+
+    -- Smear cursor when moving within line or to neighbor lines.
+    -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+    smear_between_neighbor_lines = true,
+
+    -- Draw the smear in buffer space instead of screen space when scrolling
+    scroll_buffer_space = true,
+
+    -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+    -- Smears will blend better on all backgrounds.
+    legacy_computing_symbols_support = false,
+
+    -- Smear cursor in insert mode.
+    -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+    smear_insert_mode = true,
+  },
 }
